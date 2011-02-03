@@ -285,12 +285,16 @@ For example:
       response_headers['Location']
     end
 
+    def default_current_host
+	adapter.class==Webrat::RackAdapter ? "example.org" : "www.example.com" 
+    end
+
     def current_host
-      URI.parse(current_url).host || @custom_headers["Host"] || "www.example.com"
+      URI.parse(current_url).host || @custom_headers["Host"] || default_current_host
     end
 
     def response_location_host
-      URI.parse(response_location).host || "www.example.com"
+      URI.parse(response_location).host || default_current_host
     end
 
     def reset
